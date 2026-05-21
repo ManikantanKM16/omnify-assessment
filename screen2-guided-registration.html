@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Omnify — Smart Registration</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,700;1,9..144,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #FAF7F2;
+    --teal: #1B4D4A;
+    --teal-light: #2A6B66;
+    --coral: #E8623A;
+    --coral-light: #F2845E;
+    --gold: #D4A843;
+    --text: #1A1A1A;
+    --text-mid: #5C5852;
+    --text-light: #9A9590;
+    --white: #FFFFFF;
+    --border: rgba(26,26,26,0.09);
+    --success: #2A7D5A;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* NAV */
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 40px;
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--teal);
+  }
+
+  .nav-logo span { color: var(--coral); }
+
+  .nav-back {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-mid);
+    cursor: pointer;
+  }
+
+  .nav-back:hover { color: var(--teal); }
+
+  .nav-secure {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--success);
+    font-weight: 600;
+  }
+
+  /* LAYOUT */
+  .layout {
+    display: grid;
+    grid-template-columns: 1fr 400px;
+    gap: 0;
+    min-height: calc(100vh - 57px);
+  }
+
+  /* LEFT - MAIN FLOW */
+  .main-flow {
+    padding: 40px 48px;
+    border-right: 1px solid var(--border);
+  }
+
+  /* PROGRESS */
+  .progress-row {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin-bottom: 40px;
+  }
+
+  .step {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-light);
+  }
+
+  .step.active { color: var(--teal); font-weight: 600; }
+  .step.done { color: var(--success); }
+
+  .step-num {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .step.active .step-num { background: var(--teal); border-color: var(--teal); color: white; }
+  .step.done .step-num { background: var(--success); border-color: var(--success); color: white; }
+
+  .step-line {
+    flex: 1;
+    height: 2px;
+    background: var(--border);
+    margin: 0 12px;
+    max-width: 60px;
+  }
+
+  .step-line.done { background: var(--success); }
+
+  /* AI ASSIST BOX */
+  .ai-assist {
+    background: linear-gradient(135deg, #F0F7F6 0%, #E8F4F3 100%);
+    border: 1.5px solid rgba(27,77,74,0.15);
+    border-radius: 16px;
+    padding: 18px 22px;
+    margin-bottom: 28px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+
+  .ai-assist-icon {
+    width: 36px;
+    height: 36px;
+    background: var(--teal);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    flex-shrink: 0;
+  }
+
+  .ai-assist-text p {
+    font-size: 13px;
+    color: var(--text-light);
+    margin-bottom: 2px;
+    font-weight: 500;
+  }
+
+  .ai-assist-text strong {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--teal);
+    line-height: 1.4;
+    display: block;
+  }
+
+  .ai-assist-text .ai-detail {
+    font-size: 13px;
+    color: var(--text-mid);
+    margin-top: 6px;
+    line-height: 1.5;
+  }
+
+  /* FORM SECTION */
+  .form-section {
+    margin-bottom: 32px;
+  }
+
+  .form-section-title {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--teal);
+    margin-bottom: 20px;
+    letter-spacing: -0.3px;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .form-group.full { grid-column: 1 / -1; }
+
+  label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-mid);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  input, select {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    color: var(--text);
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    padding: 12px 16px;
+    outline: none;
+    transition: border-color 0.2s;
+    width: 100%;
+  }
+
+  input:focus, select:focus { border-color: var(--teal); }
+  input.filled { border-color: rgba(27,77,74,0.25); }
+
+  .field-hint {
+    font-size: 11px;
+    color: var(--text-light);
+    margin-top: 2px;
+  }
+
+  /* CHILD CARD - prefilled by AI */
+  .child-card {
+    background: var(--white);
+    border: 1.5px solid rgba(27,77,74,0.2);
+    border-radius: 14px;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 14px;
+  }
+
+  .child-avatar {
+    width: 44px;
+    height: 44px;
+    background: linear-gradient(135deg, #FFD8C0, #FFF0E8);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+  }
+
+  .child-info { flex: 1; }
+  .child-name { font-weight: 600; font-size: 15px; color: var(--text); margin-bottom: 2px; }
+  .child-meta { font-size: 12px; color: var(--text-light); }
+
+  .child-edit {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--teal);
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .ai-prefilled {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--coral);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    background: rgba(232,98,58,0.1);
+    padding: 2px 8px;
+    border-radius: 100px;
+  }
+
+  /* SCHEDULE PICKER */
+  .schedule-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  .slot {
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    padding: 12px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .slot:hover { border-color: var(--teal); }
+
+  .slot.selected {
+    background: var(--teal);
+    border-color: var(--teal);
+    color: white;
+  }
+
+  .slot.ai-rec {
+    border-color: var(--coral);
+    position: relative;
+  }
+
+  .slot.ai-rec::after {
+    content: '✦ AI Pick';
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--coral);
+    color: white;
+    font-size: 9px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 100px;
+    white-space: nowrap;
+  }
+
+  .slot-day { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-light); margin-bottom: 4px; }
+  .slot.selected .slot-day { color: rgba(255,255,255,0.7); }
+  .slot-time { font-size: 14px; font-weight: 600; color: var(--text); }
+  .slot.selected .slot-time { color: white; }
+  .slot-spots { font-size: 11px; color: var(--text-light); margin-top: 2px; }
+  .slot.selected .slot-spots { color: rgba(255,255,255,0.7); }
+
+  /* SIBLING UPSELL */
+  .sibling-banner {
+    background: linear-gradient(135deg, #FFF8E8, #FFF0D0);
+    border: 1.5px solid rgba(212,168,67,0.3);
+    border-radius: 14px;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+
+  .sibling-icon { font-size: 26px; }
+  .sibling-text { flex: 1; }
+  .sibling-text strong { font-size: 14px; font-weight: 700; color: var(--text); display: block; margin-bottom: 2px; }
+  .sibling-text p { font-size: 12px; color: var(--text-mid); }
+
+  .sibling-add {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--gold);
+    border: 1.5px solid var(--gold);
+    background: none;
+    border-radius: 100px;
+    padding: 7px 16px;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    white-space: nowrap;
+    transition: all 0.2s;
+  }
+
+  .sibling-add:hover { background: var(--gold); color: white; }
+
+  /* CTA */
+  .cta-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .btn-checkout {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: white;
+    background: var(--coral);
+    border: none;
+    border-radius: 14px;
+    padding: 16px 36px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .btn-checkout:hover { background: var(--coral-light); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(232,98,58,0.3); }
+
+  .cta-note { font-size: 12px; color: var(--text-light); line-height: 1.5; }
+
+  /* RIGHT - ORDER SUMMARY */
+  .order-panel {
+    background: var(--white);
+    padding: 36px 32px;
+    position: sticky;
+    top: 0;
+    height: calc(100vh - 57px);
+    overflow-y: auto;
+  }
+
+  .order-title {
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--teal);
+    margin-bottom: 24px;
+    letter-spacing: -0.3px;
+  }
+
+  .order-item {
+    background: var(--cream);
+    border-radius: 14px;
+    padding: 16px 18px;
+    margin-bottom: 12px;
+  }
+
+  .order-item-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .order-item-emoji { font-size: 28px; margin-right: 4px; }
+
+  .order-item-info { flex: 1; }
+  .order-item-name { font-weight: 700; font-size: 14px; color: var(--text); margin-bottom: 3px; }
+  .order-item-meta { font-size: 12px; color: var(--text-light); }
+
+  .order-item-price {
+    font-family: 'Fraunces', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--teal);
+    white-space: nowrap;
+  }
+
+  .order-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 20px 0;
+  }
+
+  .order-line {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    color: var(--text-mid);
+    margin-bottom: 10px;
+  }
+
+  .order-line.bold {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text);
+    margin-top: 12px;
+  }
+
+  .order-line.savings {
+    font-weight: 700;
+    color: var(--success);
+  }
+
+  /* AI SUGGESTION IN PANEL */
+  .panel-ai-tip {
+    background: linear-gradient(135deg, var(--teal) 0%, var(--teal-light) 100%);
+    border-radius: 14px;
+    padding: 16px 18px;
+    margin-top: 20px;
+  }
+
+  .panel-ai-tip p {
+    font-size: 12px;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 6px;
+    font-weight: 500;
+  }
+
+  .panel-ai-tip strong {
+    font-size: 14px;
+    font-weight: 600;
+    color: white;
+    line-height: 1.4;
+    display: block;
+  }
+
+  .panel-ai-tip .tip-action {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--gold);
+    cursor: pointer;
+    margin-top: 8px;
+    display: block;
+  }
+
+  .guarantee {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 20px;
+    font-size: 12px;
+    color: var(--text-light);
+    line-height: 1.5;
+  }
+
+  .guarantee span { font-size: 20px; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">omni<span>fy</span></div>
+  <div class="nav-back">← Back to programs</div>
+  <div class="nav-secure">🔒 Secure Checkout</div>
+</nav>
+
+<div class="layout">
+
+  <!-- MAIN FLOW -->
+  <div class="main-flow">
+
+    <!-- PROGRESS -->
+    <div class="progress-row">
+      <div class="step done">
+        <div class="step-num">✓</div>
+        Discover
+      </div>
+      <div class="step-line done"></div>
+      <div class="step active">
+        <div class="step-num">2</div>
+        Register
+      </div>
+      <div class="step-line"></div>
+      <div class="step">
+        <div class="step-num">3</div>
+        Schedule
+      </div>
+      <div class="step-line"></div>
+      <div class="step">
+        <div class="step-num">4</div>
+        Pay
+      </div>
+    </div>
+
+    <!-- AI ASSIST -->
+    <div class="ai-assist">
+      <div class="ai-assist-icon">✦</div>
+      <div class="ai-assist-text">
+        <p>Omnify AI has pre-filled this form based on your earlier conversation</p>
+        <strong>You're enrolling Aria, 7 in Beginner Swim Trial — here's what we found for her</strong>
+        <div class="ai-detail">We've matched her age, selected the best trial slot with available spots, and flagged a sibling discount if you'd like to add Riya too.</div>
+      </div>
+    </div>
+
+    <!-- CHILD SECTION -->
+    <div class="form-section">
+      <div class="form-section-title">Your child's details</div>
+
+      <div class="child-card">
+        <div class="child-avatar">🧒</div>
+        <div class="child-info">
+          <div class="child-name">Aria Sharma</div>
+          <div class="child-meta">Age 7 · Female · No known allergies</div>
+        </div>
+        <div class="ai-prefilled">AI Prefilled</div>
+        <div class="child-edit">Edit</div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Child's name</label>
+          <input type="text" value="Aria Sharma" class="filled" />
+        </div>
+        <div class="form-group">
+          <label>Date of Birth</label>
+          <input type="text" value="12 Mar 2017" class="filled" />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Swimmer level</label>
+          <select>
+            <option selected>Beginner — never swum before</option>
+            <option>Some experience</option>
+            <option>Intermediate</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Special needs / notes</label>
+          <input type="text" placeholder="Any allergies, medical info..." />
+        </div>
+      </div>
+    </div>
+
+    <!-- SCHEDULE SECTION -->
+    <div class="form-section">
+      <div class="form-section-title">Pick a schedule</div>
+
+      <div class="schedule-grid">
+        <div class="slot ai-rec selected">
+          <div class="slot-day">Sat</div>
+          <div class="slot-time">10:00 AM</div>
+          <div class="slot-spots">4 spots left</div>
+        </div>
+        <div class="slot">
+          <div class="slot-day">Sat</div>
+          <div class="slot-time">12:00 PM</div>
+          <div class="slot-spots">7 spots left</div>
+        </div>
+        <div class="slot">
+          <div class="slot-day">Sun</div>
+          <div class="slot-time">9:00 AM</div>
+          <div class="slot-spots">2 spots left</div>
+        </div>
+        <div class="slot">
+          <div class="slot-day">Sun</div>
+          <div class="slot-time">11:00 AM</div>
+          <div class="slot-spots">Full</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SIBLING UPSELL -->
+    <div class="sibling-banner">
+      <div class="sibling-icon">👧</div>
+      <div class="sibling-text">
+        <strong>Add Riya (5) for 20% off both bookings</strong>
+        <p>Our AI noticed you have another child. Enrol siblings together and save ₹280.</p>
+      </div>
+      <button class="sibling-add">+ Add Sibling</button>
+    </div>
+
+    <!-- PARENT INFO -->
+    <div class="form-section">
+      <div class="form-section-title">Parent / Guardian</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Your name</label>
+          <input type="text" value="Priya Sharma" class="filled" />
+        </div>
+        <div class="form-group">
+          <label>Phone number</label>
+          <input type="text" value="+91 98765 43210" class="filled" />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group full">
+          <label>Email address</label>
+          <input type="email" value="priya.sharma@gmail.com" class="filled" />
+          <div class="field-hint">You'll receive booking confirmation and schedule reminders here</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-row">
+      <button class="btn-checkout">
+        Continue to Payment →
+      </button>
+      <div class="cta-note">No payment yet · Review on next step<br>Free cancellation up to 24hrs before</div>
+    </div>
+
+  </div>
+
+  <!-- ORDER PANEL -->
+  <div class="order-panel">
+    <div class="order-title">Your booking</div>
+
+    <div class="order-item">
+      <div class="order-item-top">
+        <div style="display:flex;align-items:center;gap:10px">
+          <div class="order-item-emoji">🏊‍♀️</div>
+          <div class="order-item-info">
+            <div class="order-item-name">Beginner Swim Trial</div>
+            <div class="order-item-meta">Aria · Sat 10:00 AM · 45 min</div>
+          </div>
+        </div>
+        <div class="order-item-price">₹699</div>
+      </div>
+    </div>
+
+    <div class="order-divider"></div>
+
+    <div class="order-line">
+      <span>Trial session</span>
+      <span>₹699</span>
+    </div>
+    <div class="order-line savings">
+      <span>✓ First-timer offer</span>
+      <span>− ₹150</span>
+    </div>
+    <div class="order-line">
+      <span>Convenience fee</span>
+      <span>₹49</span>
+    </div>
+
+    <div class="order-divider"></div>
+
+    <div class="order-line bold">
+      <span>Total due today</span>
+      <span>₹598</span>
+    </div>
+
+    <div class="panel-ai-tip">
+      <p>✦ Omnify AI tip</p>
+      <strong>Most parents who book this trial upgrade to the Monthly Pass within 2 weeks — you'd save ₹800 by upgrading now.</strong>
+      <span class="tip-action">See membership option →</span>
+    </div>
+
+    <div class="guarantee">
+      <span>🛡️</span>
+      <div>100% refund if you cancel 24hrs before. No questions asked.</div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

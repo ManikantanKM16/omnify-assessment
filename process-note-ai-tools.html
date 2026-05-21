@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Omnify AI Assessment — Process Note</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,700;1,9..144,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --teal: #1B4D4A;
+    --coral: #E8623A;
+    --cream: #FAF7F2;
+    --white: #FFFFFF;
+    --text: #1A1A1A;
+    --text-mid: #5C5852;
+    --text-light: #9A9590;
+    --border: rgba(26,26,26,0.09);
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 60px 40px;
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  .tag {
+    display: inline-block;
+    background: rgba(27,77,74,0.08);
+    color: var(--teal);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 100px;
+    margin-bottom: 20px;
+  }
+
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-size: 40px;
+    font-weight: 700;
+    color: var(--teal);
+    letter-spacing: -1px;
+    line-height: 1.15;
+    margin-bottom: 12px;
+  }
+
+  h1 em { font-style: italic; font-weight: 300; color: var(--coral); }
+
+  .intro {
+    font-size: 16px;
+    color: var(--text-mid);
+    line-height: 1.7;
+    margin-bottom: 48px;
+    max-width: 620px;
+  }
+
+  /* TOOL CARD */
+  .tool-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 28px 32px;
+    margin-bottom: 16px;
+  }
+
+  .tool-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+
+  .tool-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+
+  .ti-1 { background: linear-gradient(135deg, #E8F4F3, #C0E4E0); }
+  .ti-2 { background: linear-gradient(135deg, #FFF0E8, #FFD0B8); }
+  .ti-3 { background: linear-gradient(135deg, #FFF8E8, #FFE0A0); }
+  .ti-4 { background: linear-gradient(135deg, #F0E8FF, #D8B8FF); }
+
+  .tool-meta {}
+  .tool-name { font-family: 'Fraunces', serif; font-size: 20px; font-weight: 700; color: var(--teal); margin-bottom: 2px; }
+  .tool-role { font-size: 12px; font-weight: 700; color: var(--coral); text-transform: uppercase; letter-spacing: 0.08em; }
+
+  .tool-desc {
+    font-size: 14px;
+    color: var(--text-mid);
+    line-height: 1.7;
+  }
+
+  .tool-use {
+    margin-top: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .use-item {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    font-size: 13px;
+    color: var(--text-mid);
+    line-height: 1.5;
+  }
+
+  .use-bullet {
+    width: 18px;
+    height: 18px;
+    background: rgba(27,77,74,0.08);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    flex-shrink: 0;
+    margin-top: 1px;
+    color: var(--teal);
+    font-weight: 700;
+  }
+
+  /* DESIGN DECISIONS */
+  .section-title {
+    font-family: 'Fraunces', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--teal);
+    letter-spacing: -0.5px;
+    margin: 48px 0 20px;
+  }
+
+  .decision-item {
+    border-left: 3px solid var(--coral);
+    padding: 14px 20px;
+    margin-bottom: 12px;
+    background: var(--white);
+    border-radius: 0 12px 12px 0;
+  }
+
+  .decision-q {
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--teal);
+    margin-bottom: 5px;
+  }
+
+  .decision-a {
+    font-size: 13px;
+    color: var(--text-mid);
+    line-height: 1.6;
+  }
+
+  .footer-note {
+    margin-top: 48px;
+    padding-top: 28px;
+    border-top: 1px solid var(--border);
+    font-size: 13px;
+    color: var(--text-light);
+    line-height: 1.7;
+  }
+
+  .footer-note strong { color: var(--text-mid); }
+</style>
+</head>
+<body>
+
+<div class="tag">Process Note · Omnify AI Assessment</div>
+<h1>AI Tools Used &<br><em>How I Used Them</em></h1>
+<p class="intro">This document explains the tools used to design and build this submission, the role each played, and the key product thinking decisions made along the way.</p>
+
+<!-- TOOL 1 -->
+<div class="tool-card">
+  <div class="tool-header">
+    <div class="tool-icon ti-1">✦</div>
+    <div class="tool-meta">
+      <div class="tool-name">Claude (Anthropic)</div>
+      <div class="tool-role">Primary Design & Build Tool</div>
+    </div>
+  </div>
+  <div class="tool-desc">Used Claude as the central AI collaborator throughout this project — for product thinking, UX rationale, copy, and full-stack HTML/CSS/JS implementation of all five deliverables.</div>
+  <div class="tool-use">
+    <div class="use-item">
+      <div class="use-bullet">→</div>
+      Generated all 5 high-fidelity HTML screens from scratch using semantic HTML, custom CSS, and thoughtful interaction states
+    </div>
+    <div class="use-item">
+      <div class="use-bullet">→</div>
+      Developed the product narrative — "talk to the AI like a friend, not fill a form" — through conversation with Claude before any design work began
+    </div>
+    <div class="use-item">
+      <div class="use-bullet">→</div>
+      Iterated on microcopy (AI verdict text, recommendation labels, modal questions) to ensure they felt warm and human, not robotic
+    </div>
+    <div class="use-item">
+      <div class="use-bullet">→</div>
+      Used Claude to stress-test the UX: "What would a first-time parent find confusing here?" and refined accordingly
+    </div>
+  </div>
+</div>
+
+<!-- TOOL 2 -->
+<div class="tool-card">
+  <div class="tool-header">
+    <div class="tool-icon ti-2">🎨</div>
+    <div class="tool-meta">
+      <div class="tool-name">Google Fonts</div>
+      <div class="tool-role">Typography System</div>
+    </div>
+  </div>
+  <div class="tool-desc">Used Fraunces (an optical-size serif with a warm, editorial character) paired with DM Sans (clean, functional, approachable) to create a design voice that feels premium but not cold — right for a family-oriented product.</div>
+  <div class="tool-use">
+    <div class="use-item">
+      <div class="use-bullet">→</div>
+      Fraunces for all headlines, prices, and key UI moments — creates personality and warmth
+    </div>
+    <div class="use-item">
+      <div class="use-bullet">→</div>
+      DM Sans for body text, labels, and UI chrome — clean, readable at small sizes
+    </div>
+  </div>
+</div>
+
+<!-- TOOL 3 -->
+<div class="tool-card">
+  <div class="tool-header">
+    <div class="tool-icon ti-3">🔍</div>
+    <div class="tool-meta">
+      <div class="tool-name">Omnify Live Store Research</div>
+      <div class="tool-role">Competitive Benchmarking</div>
+    </div>
+  </div>
+  <div class="tool-desc">Spent time in the example Service Store (uproboticstech.getomnify.com) to understand the current UX: the filter-heavy interface, form flows, and calendar interaction patterns that parents experience today.</div>
+  <div class="tool-use">
+    <div class="use-item">
+      <div class="use-bullet">→</div>
+      Identified the core friction: parents must already know what they want before the interface is useful
+    </div>
+    <div class="use-item">
+      <div class="use-bullet">→</div>
+      Noted that there's no progressive disclosure — everything is shown at once, which overwhelms new users
+    </div>
+    <div class="use-item">
+      <div class="use-bullet">→</div>
+      Used this to sharpen the "AI-first" contrast in the Before/After marketing asset
+    </div>
+  </div>
+</div>
+
+<!-- TOOL 4 -->
+<div class="tool-card">
+  <div class="tool-header">
+    <div class="tool-icon ti-4">💡</div>
+    <div class="tool-meta">
+      <div class="tool-name">Design Principles (Personal Framework)</div>
+      <div class="tool-role">Aesthetic Direction</div>
+    </div>
+  </div>
+  <div class="tool-desc">Applied a "warm editorial" aesthetic direction — influenced by premium parenting brands and concierge services — to ensure the design doesn't feel like generic SaaS but like something a parent would actually trust with their child's enrollment.</div>
+  <div class="tool-use">
+    <div class="use-item">
+      <div class="use-bullet">→</div>
+      Palette: deep teal (trust, calm), coral (energy, action), warm cream (safety, warmth) — not typical SaaS blue/purple
+    </div>
+    <div class="use-item">
+      <div class="use-bullet">→</div>
+      AI is represented by ✦ (a subtle star/spark) rather than a robot icon — feels assistive, not intrusive
+    </div>
+    <div class="use-item">
+      <div class="use-bullet">→</div>
+      Language throughout uses "her", "Aria", "your child" — AI that remembers context feels like a real concierge
+    </div>
+  </div>
+</div>
+
+<!-- DESIGN DECISIONS -->
+<div class="section-title">Key product decisions</div>
+
+<div class="decision-item">
+  <div class="decision-q">Why a conversational prompt bar instead of filters?</div>
+  <div class="decision-a">Parents often don't know the vocabulary — "Level 2 Swim" means nothing if you've never enrolled before. A natural language prompt lets them say "my 7-year-old loves water but has never swum" and the AI translates that into structured recommendations. The filters remain available for power users, but they're not the entry point.</div>
+</div>
+
+<div class="decision-item">
+  <div class="decision-q">Why show a "match percentage" on cards?</div>
+  <div class="decision-a">It externalises the AI's reasoning in a way parents can quickly scan. 96% vs 79% tells a story without requiring them to read a full explanation. It also makes the top recommendation feel earned, not arbitrary.</div>
+</div>
+
+<div class="decision-item">
+  <div class="decision-q">Why include the Trial vs Membership modal?</div>
+  <div class="decision-a">This is the moment of highest anxiety for first-time parents — committing money without knowing if their child will enjoy it. An AI that proactively offers a clear comparison (with a verdict) at exactly that moment dramatically reduces abandonment and builds trust. It's AI earning its place in the UX, not AI for the sake of it.</div>
+</div>
+
+<div class="decision-item">
+  <div class="decision-q">Why pre-fill the registration form with AI context?</div>
+  <div class="decision-a">Every field a parent has to re-type is friction. If the AI already knows Aria is 7, a beginner, and interested in swimming from the conversation — the form should reflect that. This collapses a 5-minute form to a 30-second confirmation.</div>
+</div>
+
+<div class="footer-note">
+  <strong>Time spent:</strong> Approximately 4.5 hours total. Breakdown: 45 min product thinking & UX mapping, 30 min aesthetic direction, 3 hrs implementation across 5 deliverables, 15 min copy refinement.<br><br>
+  <strong>What I'd do with more time:</strong> Add a mobile viewport, build the payment step (Screen 4), create an animated prototype showing the AI typing in real-time, and test copy with actual parents.
+</div>
+
+</body>
+</html>
